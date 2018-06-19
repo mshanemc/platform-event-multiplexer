@@ -45,7 +45,6 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
 
 app.post('/events/:sobject', jsonParser, function (req, res, next) {
   console.log(`sending the event to ${conns.length} connections`);
-  console.log(req.body);
 
   const sobject = req.params.sobject;
   conns.forEach((conn) => {
