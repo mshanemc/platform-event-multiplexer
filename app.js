@@ -23,7 +23,7 @@ app.get('/', function (req, res, next) {
 // post orgId, sessionId, serverURL
 app.post('/sessionId', function (req, res, next) {
 
-  console.log(JSON.stringify(req));
+  console.log(req.body);
   // auth
   const conn = new jsforce.Connection({
     serverUrl: req.body.serverUrl,
