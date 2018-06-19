@@ -1,12 +1,10 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 const logger = require('heroku-logger');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const jsforce = require('jsforce');
 
-const loginInfo = {};
+var jsonParser = bodyParser.json()
 const conns = [];
 
 var app = express();
@@ -15,16 +13,13 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(bodyParser.json({ type: 'application/*+json' }));
-app.use(bodyParser.urlencoded({ extended: false }));
-
 /* GET home page. */
 app.get('/', function (req, res, next) {
   res.render('index', { title: 'Platform Event Multiplexer' });
 });
 
 // post orgId, sessionId, serverURL
-app.post('/sessionId', function (req, res, next) {
+app.post('/sessionId', jsonParser, function (req, res, next) {
 
   console.log(req.body);
   // auth
@@ -45,7 +40,7 @@ app.post('/sessionId', function (req, res, next) {
 //   res.send();
 // });
 
-app.post('/events/:sobject', function (req, res, next) {
+app.post('/events/:sobject', jsonParser, function (req, res, next) {
   console.log(`connections ${conns}`);
   console.log(`request ${JSON.stringify(req)}`);
 
@@ -62,9 +57,6 @@ app.post('/events/:sobject', function (req, res, next) {
   res.send('executing');
 });
 
-
-
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // catch 404 and forward to error handler
