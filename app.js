@@ -46,6 +46,7 @@ app.post('/sessionId', function (req, res, next) {
 // });
 
 app.post('/events/:sobject', function (req, res, next) {
+  console.log(conns);
   const sobject = req.params.sobject;
   conns.forEach((conn) => {
     conn.sobject(sobject).create(req.body)
