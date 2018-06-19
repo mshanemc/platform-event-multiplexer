@@ -46,8 +46,8 @@ app.post('/sessionId', function (req, res, next) {
 // });
 
 app.post('/events/:sobject', function (req, res, next) {
-  console.log(`connections ${JSON.stringify(conns)}`);
-  console.log(`request ${JSON.stringify(req)}`);
+  console.log(`connections ${conns}`);
+  console.log(`request ${req}`);
 
   const sobject = req.params.sobject;
   conns.forEach((conn) => {
