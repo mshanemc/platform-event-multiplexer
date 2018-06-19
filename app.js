@@ -29,10 +29,13 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
-  console.log(conn);
 
   // add sessions to the session pile
   conns.push(conn);
+
+  // TODO: dedupe connections by orgId?
+  console.log(`there are now ${conns.length} connections`);
+
   res.send('connected');
 });
 
