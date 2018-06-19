@@ -29,7 +29,7 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
-  logger.log(conn);
+  console.log(conn);
 
   // add sessions to the session pile
   conns.push(conn);
@@ -41,8 +41,8 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
 // });
 
 app.post('/events/:sobject', jsonParser, function (req, res, next) {
-  console.log(`connections ${conns}`);
-  console.log(`request ${JSON.stringify(req)}`);
+  console.log(`connections ${JSON.stringify(conns)}`);
+  console.log(`request ${JSON.stringify(req.body)}`);
 
   const sobject = req.params.sobject;
   conns.forEach((conn) => {
