@@ -29,6 +29,9 @@ app.post('/sessionId', function (req, res, next) {
     sessionId: req.body.sessionId,
     orgId: req.body.orgId
   });
+
+  logger.log(conn);
+
   // add sessions to the session pile
   conns.push(conn);
   res.send('connected');
