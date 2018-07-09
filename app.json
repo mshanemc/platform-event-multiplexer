@@ -1,53 +1,9 @@
 {
 	"name" : "Platform Event Multiplexer",
-	"description": "Publicly accessible API for inserting a platform event. Built to use a flic button's internet request option",
+	"description": "Publicly accessible API for inserting a platform event and streaming it to multiple salesforce orgs (short term, session-based auth) without manual authentication",
 	"keywords": [
 		"salesforce",
-		"platform event",
-		"flic"
+		"platform event"
 	],
-	"repository": "https://github.com/mshanemc/platform-event-flic",
-	"env": {
-		"environment": {
-			"description": "test for sandboxes, scratch orgs.  Leave blacnk, delete, or put anything else for production",
-			"value" : "test"
-		},
-		"SFDC_APP_ID": {
-			"description": "Connected App ID aka Consumer Key"
-		},
-		"SFDC_APP_SECRET": {
-			"description": "Connected App Secret aka Consumer Secret"
-		},
-		"SFDC_USERNAME": {
-			"description": "Salesforce username of the org platform events should go to"
-		},
-		"SFDC_PASSWORD": {
-			"description": "Password for SFDC_USERNAME"
-		},
-		"EVENT_API_NAME": {
-			"description": "API name of the event to create, ending with __e"
-		},
-		"EVENT_JSON": {
-			"description": "JSON for the fields on the event",
-			"value" : "{\"Field__c\" : \"Value\"}"
-		},
-		"DOUBLECLICK_EVENT_API_NAME": {
-			"description": "API name of the event to create, ending with __e for double-click",
-			"required" : false
-		},
-		"DOUBLECLICK_JSON": {
-			"description": "JSON for the fields on the event for double-click",
-			"value": "{\"Field__c\" : \"Value\"}",
-			"required": false
-		},
-		"HOLD_EVENT_API_NAME": {
-			"description": "API name of the event to create from hold, ending with __e",
-			"required": false
-		},
-		"HOLD_JSON": {
-			"description": "JSON for the fields on the hold event",
-			"value": "{\"Field__c\" : \"Value\"}",
-			"required": false
-		}
-	}
+	"repository": "https://github.com/mshanemc/platform-event-multiplexer"
 }
