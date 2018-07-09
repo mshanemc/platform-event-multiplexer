@@ -1,6 +1,6 @@
 {
 	"name" : "Platform Event Multiplexer",
-	"description": "Publicly accessible API for inserting a platform event and streaming it to multiple salesforce orgs (short term, session-based auth) without manual authentication",
+	"description": "API for inserting a platform event and streaming to multiple SFDC orgs (short term, session-based auth) without manual authentication",
 	"keywords": [
 		"salesforce",
 		"platform event"
