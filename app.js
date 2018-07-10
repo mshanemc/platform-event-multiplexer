@@ -3,21 +3,18 @@ var path = require('path');
 const logger = require('heroku-logger');
 var bodyParser = require('body-parser');
 const jsforce = require('jsforce');
+var cors = require('cors');
 
 var jsonParser = bodyParser.json()
 const conns = [];
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
 
 /* GET home page. */
 app.get('/', function (req, res, next) {
