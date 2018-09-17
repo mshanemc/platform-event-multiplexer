@@ -33,6 +33,7 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
+  console.log(conns);
   // dedupe connections by orgId
   const index = conns.findIndex(element => element.orgId === conn.orgId);
 
