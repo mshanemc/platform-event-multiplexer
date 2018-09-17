@@ -33,21 +33,26 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
-  console.log(conns);
   // dedupe connections by orgId
   const index = conns.findIndex(element => element.orgId === conn.orgId);
 
   if (index > -1) {
     // already exists
     console.log('already exists');
-    conns[index] = conn;
+    conns[index] = {
+      orgId: conn.orgId,
+      org: conn
+    };
   } else {
     // didn't exist
     console.log('new destination org');
-    conns.push(conn);
+    conns.push({
+      orgId: conn.orgId,
+      org: conn
+    });
   }
 
-  console.log(`there are now ${conns.length} connections`);
+  console.log(`there are now ${conns.length} orgs`);
 
   res.send('connected');
 });
@@ -57,11 +62,11 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
 // });
 
 app.post('/events/:sobject', jsonParser, function (req, res, next) {
-  console.log(`sending the event to ${conns.length} connections`);
+  console.log(`sending the event to ${conns.length} orgs`);
 
   const sobject = req.params.sobject;
-  conns.forEach((conn) => {
-    conn.sobject(sobject).create(req.body)
+  conns.forEach((org) => {
+    org.conn.sobject(sobject).create(req.body)
       .then( (res) => {
         console.log( res);
       })
