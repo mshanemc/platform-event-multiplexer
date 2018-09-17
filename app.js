@@ -38,9 +38,11 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
 
   if (index > -1) {
     // already exists
+    console.log('already exists');
     conns[index] = conn;
   } else {
     // didn't exist
+    console.log('new destination org');
     conns.push(conn);
   }
 
