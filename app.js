@@ -33,11 +33,17 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
+  // dedupe connections by orgId
+  const index = conns.findIndex(element => element.orgId === conn.orgId);
 
-  // add sessions to the session pile
-  conns.push(conn);
+  if (index > -1) {
+    // already exists
+    conns[index] = conn;
+  } else {
+    // didn't exist
+    conns.push(conn);
+  }
 
-  // TODO: dedupe connections by orgId?
   console.log(`there are now ${conns.length} connections`);
 
   res.send('connected');
