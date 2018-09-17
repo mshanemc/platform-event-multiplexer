@@ -68,8 +68,8 @@ app.post('/events/:sobject', jsonParser, function (req, res, next) {
   console.log(`sending the event to ${conns.length} orgs`);
 
   const sobject = req.params.sobject;
-  conns.forEach((org) => {
-    org.conn.sobject(sobject).create(req.body)
+  conns.forEach((conn) => {
+    conn.org.sobject(sobject).create(req.body)
       .then( (res) => {
         console.log( res);
       })
