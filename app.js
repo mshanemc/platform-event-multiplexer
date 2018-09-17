@@ -6,7 +6,7 @@ const jsforce = require('jsforce');
 var cors = require('cors');
 
 var jsonParser = bodyParser.json()
-const conns = [];
+let conns = [];
 
 var app = express();
 app.use(cors());
@@ -34,20 +34,23 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
   });
 
   // dedupe connections by orgId
-  const index = conns.findIndex(element => element.orgId === conn.orgId);
+  const index = conns.findIndex(element => element.orgId === req.body.orgId);
+  console.log(`index is ${index}`);
 
   if (index > -1) {
     // already exists
     console.log('already exists');
+    console.log(conns[index]);
+
     conns[index] = {
-      orgId: conn.orgId,
+      orgId: req.body.orgId,
       org: conn
     };
   } else {
     // didn't exist
     console.log('new destination org');
     conns.push({
-      orgId: conn.orgId,
+      orgId: req.body.orgId,
       org: conn
     });
   }
