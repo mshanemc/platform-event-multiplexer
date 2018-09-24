@@ -6,7 +6,7 @@ const jsforce = require('jsforce');
 var cors = require('cors');
 
 var jsonParser = bodyParser.json()
-const conns = [];
+let conns = [];
 
 var app = express();
 app.use(cors());
@@ -33,12 +33,29 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
     orgId: req.body.orgId
   });
 
+  // dedupe connections by orgId
+  const index = conns.findIndex(element => element.orgId === req.body.orgId);
+  console.log(`index is ${index}`);
 
-  // add sessions to the session pile
-  conns.push(conn);
+  if (index > -1) {
+    // already exists
+    console.log('already exists');
+    console.log(conns[index]);
 
-  // TODO: dedupe connections by orgId?
-  console.log(`there are now ${conns.length} connections`);
+    conns[index] = {
+      orgId: req.body.orgId,
+      org: conn
+    };
+  } else {
+    // didn't exist
+    console.log('new destination org');
+    conns.push({
+      orgId: req.body.orgId,
+      org: conn
+    });
+  }
+
+  console.log(`there are now ${conns.length} orgs`);
 
   res.send('connected');
 });
@@ -48,11 +65,11 @@ app.post('/sessionId', jsonParser, function (req, res, next) {
 // });
 
 app.post('/events/:sobject', jsonParser, function (req, res, next) {
-  console.log(`sending the event to ${conns.length} connections`);
+  console.log(`sending the event to ${conns.length} orgs`);
 
   const sobject = req.params.sobject;
   conns.forEach((conn) => {
-    conn.sobject(sobject).create(req.body)
+    conn.org.sobject(sobject).create(req.body)
       .then( (res) => {
         console.log( res);
       })
